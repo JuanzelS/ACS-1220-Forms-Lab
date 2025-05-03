@@ -1,9 +1,31 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
 <p>Author creation form.</p>
 
-<!-- TODO: Add a <form> element here and use the form variable to show the labels & fields -->
-
+<form method="POST">
+    {{ form.csrf_token }}
+    
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name() }}
+    </p>
+    
+    <p>
+        {{ form.biography.label }}<br>
+        {{ form.biography() }}
+    </p>
+    
+    <!-- Stretch challenge fields -->
+    <p>
+        {{ form.birth_date.label }}<br>
+        {{ form.birth_date() }}
+    </p>
+    
+    <p>
+        {{ form.country.label }}<br>
+        {{ form.country() }}
+    </p>
+    
+    {{ form.submit() }}
+</form>
 {% endblock %}

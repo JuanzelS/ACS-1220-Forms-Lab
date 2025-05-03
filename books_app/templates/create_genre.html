@@ -1,26 +1,15 @@
-
 {% extends 'base.html' %}
 {% block content %}
+<p>Genre creation form.</p>
 
-<h1>Create New Genre</h1>
-
-<form method="POST" action="{{ url_for('main.create_genre') }}">
+<form method="POST">
     {{ form.csrf_token }}
     
-    <div class="form-group">
-        {{ form.name.label }}
-        {{ form.name(class="form-control") }}
-        
-        {% if form.name.errors %}
-        <div class="alert alert-danger">
-            {% for error in form.name.errors %}
-            <span>{{ error }}</span>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name() }}
+    </p>
     
-    {{ form.submit(class="btn btn-primary") }}
+    {{ form.submit() }}
 </form>
-
 {% endblock %}
