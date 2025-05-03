@@ -1,9 +1,26 @@
-{% extends 'base.html' %}
 
+{% extends 'base.html' %}
 {% block content %}
 
-<p>Genre creation form.</p>
+<h1>Create New Genre</h1>
 
-<!-- TODO: Add a <form> element here and use the form variable to show the labels & fields -->
+<form method="POST" action="{{ url_for('main.create_genre') }}">
+    {{ form.csrf_token }}
+    
+    <div class="form-group">
+        {{ form.name.label }}
+        {{ form.name(class="form-control") }}
+        
+        {% if form.name.errors %}
+        <div class="alert alert-danger">
+            {% for error in form.name.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    
+    {{ form.submit(class="btn btn-primary") }}
+</form>
 
 {% endblock %}

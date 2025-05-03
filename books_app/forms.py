@@ -1,14 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, SelectField, SubmitField
-from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
+from wtforms import StringField, DateField, SelectField, SubmitField, TextAreaField
+# Updated import path for newer versions of WTForms
+from wtforms_sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import DataRequired, Length, ValidationError
 from books_app.models import Audience, Book, Author, Genre
 
 class BookForm(FlaskForm):
     """Form to create a book."""
-    title = StringField('Book Title', 
+    title = StringField('Book Title',
         validators=[
-            DataRequired(), 
+            DataRequired(),
             Length(min=3, max=80, message="Your message needs to be betweeen 3 and 80 chars")
         ])
     publish_date = DateField('Date Published', validators=[DataRequired()])
@@ -21,25 +22,29 @@ class BookForm(FlaskForm):
         if 'banana' in field.data:
             raise ValidationError('Title cannot contain the word banana')
 
-
 class AuthorForm(FlaskForm):
     """Form to create an author."""
-
-    # TODO: Fill out the fields in this class for:
-    # - the author's name
-    # - the author's biography (hint: use a TextAreaField)
-    # - a submit button
-
-    # STRETCH CHALLENGE: Add more fields here as well as in `models.py` to
-    # collect more information about the author, such as their birth date,
-    # country, etc.
-    pass
-
+    name = StringField('Author Name', 
+        validators=[
+            DataRequired(),
+            Length(min=3, max=80, message="Name must be between 3 and 80 characters")
+        ])
+    biography = TextAreaField('Biography', 
+        validators=[
+            DataRequired(),
+            Length(min=10, message="Biography must be at least 10 characters")
+        ])
+    # STRETCH CHALLENGE: Additional author fields
+    birth_date = DateField('Birth Date', validators=[], format='%Y-%m-%d')
+    country = StringField('Country of Origin')
+    
+    submit = SubmitField('Submit')
 
 class GenreForm(FlaskForm):
     """Form to create a genre."""
-
-    # TODO: Fill out the fields in this class for:
-    # - the genre's name (e.g. fiction, non-fiction, etc)
-    # - a submit button
-    pass
+    name = StringField('Genre Name', 
+        validators=[
+            DataRequired(),
+            Length(min=3, max=50, message="Genre name must be between 3 and 50 characters")
+        ])
+    submit = SubmitField('Submit')
